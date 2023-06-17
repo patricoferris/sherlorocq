@@ -1,0 +1,3 @@
+(executable
+ (name opam2tsv)
+ (libraries astring))

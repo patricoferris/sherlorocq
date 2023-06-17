@@ -4,17 +4,18 @@ module Higlo = Higlo.Lang
 let span cl s = H.span ~a:[ H.a_class [ cl ] ] [ H.txt s ]
 
 let html_of_token = function
-  | Higlo.Text str -> H.txt str
-  | Symbol (_, s) -> span "symbol" s
-  | String s -> span "string" s
-  | Numeric s -> span "numeric" s
-  | Lcomment s -> span "comment" s
-  | Bcomment s -> span "comment" s
-  | Keyword (_, s) -> span "kw" s
-  | Escape s -> span "escape" s
-  | Directive s -> span "directive" s
-  | Constant s -> span "constant" s
-  | Id s -> span "ident" s
+  | Higlo.Text (str, _) -> H.txt str
+  | Symbol (_, (s, _)) -> span "symbol" s
+  | String (s, _) -> span "string" s
+  | Numeric (s, _) -> span "numeric" s
+  | Lcomment (s, _) -> span "comment" s
+  | Bcomment (s, _) -> span "comment" s
+  | Keyword (_, (s, _)) -> span "kw" s
+  | Escape (s, _) -> span "escape" s
+  | Directive (s, _) -> span "directive" s
+  | Constant (s, _) -> span "constant" s
+  | Id (s, _) -> span "ident" s
+  | Title (_, (s, _)) -> span "title" s
 
 let string_of_token = function
   | Higlo.Text s
@@ -27,20 +28,22 @@ let string_of_token = function
   | Escape s
   | Directive s
   | Constant s
-  | Id s -> s
+  | Title (_, s)
+  | Id s -> fst s
 
 let token_replace s = function
-  | Higlo.Text _ -> Higlo.Text s
-  | Symbol (n, _) -> Symbol (n, s)
-  | String _ -> String s
-  | Numeric _ -> Numeric s
-  | Lcomment _ -> Lcomment s
-  | Bcomment _ -> Bcomment s
-  | Keyword (n, _) -> Keyword (n, s)
-  | Escape _ -> Escape s
-  | Directive _ -> Directive s
-  | Constant _ -> Constant s
-  | Id _ -> Id s
+  | Higlo.Text (_, i) -> Higlo.Text (s, i)
+  | Symbol (n, (_, i)) -> Symbol (n, (s, i))
+  | String (_, i) -> String (s, i)
+  | Numeric (_, i) -> Numeric (s, i)
+  | Lcomment (_, i) -> Lcomment (s, i)
+  | Bcomment (_, i) -> Bcomment (s, i)
+  | Keyword (n, (_, i)) -> Keyword (n, (s, i))
+  | Escape (_, i) -> Escape (s, i)
+  | Directive (_, i) -> Directive (s, i)
+  | Constant (_, i) -> Constant (s, i)
+  | Id (_, i) -> Id (s, i)
+  | Title (f, (_, i)) -> Title (f, (s, i))
 
 let string_split i str = String.sub str 0 i, String.sub str i (String.length str - i)
 

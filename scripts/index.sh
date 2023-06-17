@@ -12,6 +12,6 @@ fi
 
 dune build index/index.exe
 
-find "$1" -name '*.ml*' \
+find "$1" -name '*.v*' \
   | sort -R \
   | dune exec -- index/index.exe --prefix="$1" "$2"

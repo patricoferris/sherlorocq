@@ -17,3 +17,6 @@ _build/
 _doc/
 _coverage/
 _opam/
+
+src
+target
