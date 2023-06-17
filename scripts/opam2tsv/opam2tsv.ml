@@ -1,5 +1,8 @@
 (*
 opam list --columns=name,dev-repo: --separator=, --repo=coq-released --available --short | _build/default/scripts/opam2tsv/opam2tsv.exe
+
+For downloading the source packages you can use:
+  opam list --columns=name --repo=coq-released --available --short | xargs -I@ opam source @ --dir=@
 *)
 
 let process_url s =
