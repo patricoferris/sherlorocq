@@ -53,6 +53,7 @@ mark::after {
 }
 
 input[name='q'] {
+  font-family: monospace;
   font-size: 1.25em;
 
   display: block;
