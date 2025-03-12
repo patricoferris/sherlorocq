@@ -87,7 +87,7 @@ let result_html ~cont_above ~cont_below filename line_num hlmatch =
 let explain_indexing =
   p
     [ txt
-        {|The search will proceed on all .ml and .mli, stripped of their comments, on either the package release or the git repository where available.|}
+        {|The search will proceed on all .v, stripped of their comments, on either the package release or the git repository where available.|}
     ]
 
 let github_icon =
@@ -113,7 +113,7 @@ let github_icon =
 let link_to_repo =
   p
     ~a:[ a_class [ "ad" ] ]
-    [ txt {|(* Read the source, fork and contribute to |}
+    [ txt {|(* Read the original source for the OCaml version |}
     ; a
         ~a:[ a_href "https://github.com/art-w/sherlocode" ]
         [ github_icon; txt "art-w/sherlocode" ]
@@ -138,14 +138,10 @@ let sherlocoq_link =
 
 let frontpage =
   div
-    [ h1 [ txt "Sherlocode" ]
+    [ h1 [ txt "Sherlocoq" ]
     ; p
         ~a:[ a_class [ "hero" ] ]
-        [ txt "Search across 17 million lines of OCaml available on opam! "
-        ; span
-            ~a:[ a_class [ "new" ] ]
-            [ txt " NEW: also available for Coq with "; sherlocoq_link; txt "!" ]
-        ]
+        [ txt "Search across Coq libraries available on opam!" ]
     ; explain_regex_syntax
     ; explain_indexing
     ; link_to_repo
@@ -163,7 +159,7 @@ let search_form query =
               ; a_value query
               ; a_placeholder "Search..."
               ; a_autofocus ()
-              ; a_autocomplete false
+              ; a_autocomplete `Off 
               ]
             ()
         ; input ~a:[ a_input_type `Submit; a_value "Search" ] ()
@@ -202,7 +198,7 @@ let template query contents =
   html
     ~a:[ a_lang "en" ]
     (head
-       (title (txt "Sherlocode"))
+       (title (txt "Sherlocoq"))
        [ meta ~a:[ a_charset "UTF-8" ] ()
        ; meta ~a:[ a_name "viewport"; a_content "width=device-width, initial-scale=1" ] ()
        ; link ~rel:[ `Stylesheet ] ~href:"/s.css" ()

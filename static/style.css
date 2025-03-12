@@ -12,6 +12,8 @@ body {
   --bluetxt: #00434A;
   --grey: #9CADAD;
 
+  --coq-github: #d0b68c;
+
   background: var(--bg);
 }
 
@@ -42,7 +44,7 @@ mark::after {
   padding-left: 2.5rem;
   padding-right: 1vmax;
 
-  background: var(--green);
+  background: var(--coq-github);
   border-bottom: 2px solid var(--darkgreen);
 }
 .header form {
@@ -335,7 +337,7 @@ p.hero {
 
 .header a, .header a:visited {
   display: inline-block;
-  color: var(--lightbg);
+  color: black;
   margin: 0 2em;
   padding: 0.25em 0;
   text-decoration: none;
@@ -346,6 +348,6 @@ p.hero {
 }
 
 .header a:hover {
-  color: var(--yellow);
+  color: var(--darkgreen);
   border-bottom: 2px solid var(--yellow);
 }
