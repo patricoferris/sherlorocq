@@ -2,7 +2,7 @@
   description = "Build an opam project not in the repo, using sane defaults";
   inputs.opam-nix.url = "github:tweag/opam-nix";
   inputs.flake-utils.url = "github:numtide/flake-utils";
-  inputs.sherlorocq.url = "github:patricoferris/sherlocode#coq";
+  inputs.sherlorocq.url = "github:patricoferris/sherlorocq";
   outputs =
     {
       self,
