@@ -131,17 +131,17 @@ let sherlodoc_link =
 let sherlocoq_link =
   a
     ~a:
-      [ a_href "https://sherlocoq.sirref.org"
-      ; a_title "Search across Coq libraries available on opam!"
+      [ a_href "https://sherlorocq.sirref.org"
+      ; a_title "Search across Rocq libraries available on opam!"
       ]
-    [ txt "Sherlocoq" ]
+    [ txt "Sherlorocq" ]
 
 let frontpage =
   div
-    [ h1 [ txt "Sherlocoq" ]
+    [ h1 [ txt "Sherlorocq" ]
     ; p
         ~a:[ a_class [ "hero" ] ]
-        [ txt "Search across Coq libraries available on opam!" ]
+        [ txt "Search across Rocq libraries available on opam!" ]
     ; explain_regex_syntax
     ; explain_indexing
     ; link_to_repo
