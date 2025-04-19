@@ -1,3 +1,5 @@
 (executable
  (name index)
+ (package sherlocode)
+ (public_name sherlocode-index)
  (libraries cmdliner db))
