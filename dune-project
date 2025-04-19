@@ -14,6 +14,7 @@
   (synopsis "Realtime grep for OCaml sources available on opam")
   (depends
     (ocaml (and (>= "4.08") (< "5.0.0")))
+    astring
     (ancient (>= "0.9.1"))
     (cmdliner (>= "1.1.0"))
     (lwt (>= "4.5.2"))

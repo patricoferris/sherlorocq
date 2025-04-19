@@ -1,24 +1,34 @@
 {
-  description = "Build an opam project not in the repo, using sane defaults";
-  inputs.opam-nix.url = "github:tweag/opam-nix";
-  inputs.flake-utils.url = "github:numtide/flake-utils";
-  inputs.sherlorocq.url = "github:patricoferris/sherlorocq";
+  inputs = {
+    opam-nix.url = "github:tweag/opam-nix";
+    flake-utils.url = "github:numtide/flake-utils";
+    nixpkgs.follows = "opam-nix/nixpkgs";
+  };
   outputs =
     {
       self,
-      opam-nix,
-      sherlorocq,
       flake-utils,
-    }:
-    flake-utils.lib.eachDefaultSystem (system: {
-      legacyPackages =
-        let
-          inherit (opam-nix.lib.${system}) buildOpamProject;
-          scope = buildOpamProject { } "sherlorocq" sherlorocq {
-            ocaml-system = "*";
-          };
-        in
-        scope;
-      defaultPackage = self.legacyPackages.${system}.sherlorocq;
-    });
+      opam-nix,
+      nixpkgs,
+    }@inputs:
+    # Don't forget to put the package name instead of `throw':
+    let
+      package = "sherlocode";
+    in
+    flake-utils.lib.eachDefaultSystem (
+      system:
+      let
+        pkgs = nixpkgs.legacyPackages.${system};
+        on = opam-nix.lib.${system};
+        scope = on.buildOpamProject { } package ./. { ocaml-base-compiler = "*"; };
+        overlay = final: prev: {
+          # Your overrides go here
+        };
+      in
+      {
+        legacyPackages = scope.overrideScope overlay;
+
+        packages.default = self.legacyPackages.${system}.${package};
+      }
+    );
 }
