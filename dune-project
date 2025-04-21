@@ -2,7 +2,7 @@
 (using menhir 2.0)
 (generate_opam_files true)
 
-(name sherlocode)
+(name sherlorocq)
 (source (github art-w/sherlocode))
 (license MIT)
 (authors "Arthur Wendling")
@@ -10,7 +10,7 @@
 (version 0.1)
 
 (package
-  (name sherlocode)
+  (name sherlorocq)
   (synopsis "Realtime grep for OCaml sources available on opam")
   (depends
     (ocaml (and (>= "4.08") (< "5.0.0")))

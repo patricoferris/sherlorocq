@@ -1,4 +1,4 @@
 (executable
  (name www)
- (public_name sherlocode)
+ (public_name sherlorocq)
  (libraries cmdliner lwt dream higlo str tyxml db regex))
