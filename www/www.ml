@@ -1,5 +1,7 @@
 open Lwt.Syntax
 
+let ( / ) a b = a ^ "/" ^ b
+
 let api ~cursor query =
   let+ results, stop = Search.api ~cursor query in
   Present.present ~query ~start:cursor ~stop results
@@ -27,7 +29,7 @@ let cache : int -> Dream.middleware =
   Dream.add_header response "Cache-Control" ("public, max-age=" ^ string_of_int max_age) ;
   response
 
-let webserver ~db ~max_age =
+let webserver ~static_dir ~db ~max_age =
   Dream.run ~interface:"127.0.0.1" ~port:8888
   @@ Dream.logger
   @@ cache max_age
@@ -42,17 +44,18 @@ let webserver ~db ~max_age =
            (root ~db (fun ~cursor q ->
               let+ result = api ~cursor q in
               string_of_tyxml' result))
-       ; Dream.get "/s.css" (Dream.from_filesystem "static" "style.css")
-       ; Dream.get "/robots.txt" (Dream.from_filesystem "static" "robots.txt")
-       ; Dream.get "/favicon.ico" (Dream.from_filesystem "static" "favicon.ico")
+       ; Dream.get "/s.css" (Dream.from_filesystem static_dir "style.css")
+       ; Dream.get "/robots.txt" (Dream.from_filesystem static_dir "robots.txt")
+       ; Dream.get "/favicon.ico" (Dream.from_filesystem static_dir "favicon.ico")
        ]
 
-let main path url_tsv max_age =
+let main path static_dir max_age =
+  let url_tsv = static_dir / "urls.tsv" in 
   Link.load url_tsv ;
   let source_file = path ^ "/source.txt" in
   let ancient_file = path ^ "/ancient.db" in
   let db = Db.db_open_in ~source:source_file ~db:ancient_file in
-  webserver ~db ~max_age
+  webserver ~static_dir ~db ~max_age
 
 open Cmdliner
 
@@ -64,11 +67,11 @@ let cache_max_age =
   let doc = "HTTP cache max age (in seconds)" in
   Arg.(value & opt int 3600 & info [ "c"; "cache" ] ~docv:"MAX_AGE" ~doc)
 
-let url =
-  let doc = "URL of the sources for each project (tab separated file)" in
-  Arg.(value & opt file "static/urls.tsv" & info [ "u"; "url" ] ~docv:"MAX_AGE" ~doc)
+let static =
+  let doc = "Static directory" in
+  Arg.(value & opt dir "static" & info [ "s"; "static" ] ~docv:"STATIC" ~doc)
 
-let www = Term.(const main $ path $ url $ cache_max_age)
+let www = Term.(const main $ path $ static $ cache_max_age)
 
 let cmd =
   let doc = "Webserver for sherlocode" in
