@@ -13,7 +13,7 @@
     }@inputs:
     # Don't forget to put the package name instead of `throw':
     let
-      package = "sherlocode";
+      package = "sherlorocq";
     in
     flake-utils.lib.eachDefaultSystem (
       system:
