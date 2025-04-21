@@ -198,7 +198,7 @@ let template query contents =
   html
     ~a:[ a_lang "en" ]
     (head
-       (title (txt "Sherlocoq"))
+       (title (txt "Sherlorocq"))
        [ meta ~a:[ a_charset "UTF-8" ] ()
        ; meta ~a:[ a_name "viewport"; a_content "width=device-width, initial-scale=1" ] ()
        ; link ~rel:[ `Stylesheet ] ~href:"/s.css" ()
