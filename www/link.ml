@@ -69,9 +69,15 @@ let split_project filename =
   in
   let at = String.index filename '/' in
   let project = String.sub filename 0 at in
+  (* Remove version numbers *)
+  let project = match String.split_on_char '.' project with
+    | x :: _ -> x
+    | _ -> project 
+  in
   let at = at + 1 in
   let file = String.sub filename at (String.length filename - at) in
   project, file
+
 
 let url filename line_number =
   try
