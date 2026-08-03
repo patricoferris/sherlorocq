@@ -62,6 +62,11 @@ let load filename =
   close_in h
 
 let split_project filename =
+  let filename =
+    if String.starts_with ~prefix:"/" filename
+    then String.sub filename 1 (String.length filename - 1)
+    else filename
+  in
   let at = String.index filename '/' in
   let project = String.sub filename 0 at in
   let at = at + 1 in
